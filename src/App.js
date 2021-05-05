@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import Header from './components/Header/Header';
 import './App.scss';
 
 //Redux
@@ -8,15 +9,15 @@ import store from './store/store';
 function App() {
   return (
     <Provider store={store}>
-    <BrowserRouter>
-      <div className='App'>
-        {/* <Header currentUser={this.state.currentUser} /> */}
-        <Switch>
-          {/* <Route exact path='/login' component={SignInPage} /> */}
-        </Switch>
-      </div>
-    </BrowserRouter>
-  </Provider>
+      <BrowserRouter>
+        <div className='App'>
+          <Header />
+          <Switch>
+            {/* <Route exact path='/login' component={SignInPage} /> */}
+          </Switch>
+        </div>
+      </BrowserRouter>
+    </Provider>
   );
 }
 
