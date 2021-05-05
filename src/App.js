@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Header from './components/Header/Header';
+import LandingPage from './containers/LandingPage/LandingPage';
 import './App.scss';
 
 //Redux
@@ -13,7 +14,7 @@ function App() {
         <div className='App'>
           <Header />
           <Switch>
-            {/* <Route exact path='/login' component={SignInPage} /> */}
+            <Route exact path='/' component={LandingPage} />
           </Switch>
         </div>
       </BrowserRouter>

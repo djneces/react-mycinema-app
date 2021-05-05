@@ -1,12 +1,18 @@
 import React from 'react';
 
-import GoogleAuthBtn from '../GoogleAuth/GoogleAuth';
+import GoogleAuth from '../GoogleAuth/GoogleAuth';
+import logo from '../../assets/images/logo.png';
 import './Header.scss';
 
 const Header = () => {
   return (
-    <div>
-      <GoogleAuthBtn />
+    <div className='Header'>
+      <div className='Header__logo'>
+        <img src={logo} alt='website logo icon' />
+      </div>
+      <div className='Header__googleLogin'>
+        <GoogleAuth />
+      </div>
     </div>
   );
 };

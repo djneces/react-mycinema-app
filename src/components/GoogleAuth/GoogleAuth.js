@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import { auth } from '../../googleAuthUtil';
 import {
   authInit,
   googleSignIn,
@@ -7,10 +6,11 @@ import {
   onAuthChange,
 } from '../../store/actions/auth';
 import { connect } from 'react-redux';
+import CustomBtnOutline from '../CustomBtnOutline/CustomBtnOutline';
+
+import './GoogleAuth.scss';
 
 class GoogleAuth extends Component {
-  state = { isSignedIn: null };
-
   async componentDidMount() {
     this.googleAuth = await this.props.authInit();
     //listening for Auth changes
@@ -32,24 +32,37 @@ class GoogleAuth extends Component {
   };
 
   renderAuthButton() {
-    const { isAuthenticated } = this.props;
+    const { isAuthenticated, username } = this.props;
     if (isAuthenticated === null) {
       return null;
     } else if (isAuthenticated) {
-      return <button onClick={this.onSignOutClick}>Sign Out</button>;
+      return (
+        <div className='GoogleAuth__userProfile'>
+          <span>Hello, </span>
+          <span>{username}</span>
+          <i className='far fa-user'></i>
+        </div>
+      );
     } else {
-      return <button onClick={this.onSignInClick}>Sign In with Google</button>;
+      return (
+        <div className='GoogleAuth__userProfile'>
+          <CustomBtnOutline onclick={this.onSignInClick}>
+            Sign In with Google
+            <i className='fab fa-google'></i>
+          </CustomBtnOutline>
+        </div>
+      );
     }
   }
 
   render() {
     return <div className='GoogleAuth'>{this.renderAuthButton()}</div>;
-    // return <div className='GoogleAuth'></div>;
   }
 }
 
 const mapStateToProps = ({ auth }) => ({
   isAuthenticated: auth.isAuthenticated,
+  username: auth.currentUser?.username,
 });
 
 export default connect(mapStateToProps, {
