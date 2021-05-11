@@ -1,9 +1,20 @@
 .SelectShowTimePage {
-    height: 23vh;
-    width: 50vw;
-    border: 1px solid orangered;
-    margin-top: 1rem;
-    border-radius: 15px;
-    align-self: flex-start;
-    margin-left: 2rem;
+    height: 100%;
+    width: 100%;
+    padding-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-start;
+
+    &__showTimesList {
+        margin-right: 3rem;
+        align-self: flex-end;
+        width: 90vw;
+    }
+
+    &__orderSummary {
+        margin-right: 3rem;
+        align-self: flex-end;
+    }
 }

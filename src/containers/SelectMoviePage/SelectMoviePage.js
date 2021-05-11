@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchAllMovies } from '../../store/actions/movies';
 import MoviesList from '../../components/MoviesList/MoviesList';
+import OrderSummary from '../../components/OrderSummary/OrderSummary';
 import ScrollDownArrow from '../../components/ScrollDownArrow/ScrollDownArrow';
 import { DB } from '../../assets/moviesSeed';
 import './SelectMoviePage.scss';
@@ -16,7 +17,7 @@ class SelectMoviePage extends Component {
     }
   }
   render() {
-    const { selectedMovie, fetchedMovies } = this.props;
+    const { fetchedMovies } = this.props;
     return (
       <div className='SelectMoviePage'>
         <div className='SelectMoviePage__movieSelect'>
@@ -25,35 +26,7 @@ class SelectMoviePage extends Component {
           ) : (
             <div>Loading</div>
           )}
-          <div className='SelectMoviePage__movieSelect-summary'>
-            {selectedMovie ? (
-              <>
-                <div className='SelectMoviePage__movieSelect-summary-details'>
-                  <div>
-                    <span>Movie:</span>
-                    <br></br>
-                    <span>
-                      {selectedMovie
-                        ? fetchedMovies[selectedMovie].title
-                        : 'Please, select a movie'}
-                    </span>
-                  </div>
-                  <div>Date:</div>
-                  <div>Time:</div>
-                </div>
-                <div className='SelectMoviePage__movieSelect-summary-poster'>
-                  {selectedMovie && (
-                    <img
-                      src={fetchedMovies[selectedMovie].posterUrl}
-                      alt={fetchedMovies[selectedMovie].title}
-                    />
-                  )}
-                </div>
-              </>
-            ) : (
-              <h2>Please, select a movie</h2>
-            )}
-          </div>
+          <OrderSummary />
         </div>
         <div className='SelectMoviePage__scrollIcon'>
           {/* scroll icon only when movies > 6 */}
@@ -65,6 +38,5 @@ class SelectMoviePage extends Component {
 }
 const mapStateToProps = ({ movies }) => ({
   fetchedMovies: movies?.fetchedMovies,
-  selectedMovie: movies?.selectedMovie,
 });
 export default connect(mapStateToProps, { fetchAllMovies })(SelectMoviePage);

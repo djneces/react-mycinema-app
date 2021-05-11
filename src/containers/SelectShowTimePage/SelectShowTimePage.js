@@ -1,11 +1,17 @@
 import React from 'react';
+import OrderSummary from '../../components/OrderSummary/OrderSummary';
 import ShowTimesList from '../../components/ShowTimesList/ShowTimesList';
 import './SelectShowTimePage.scss';
 
 const SelectShowTimePage = () => {
   return (
     <div className='SelectShowTimePage'>
-      <ShowTimesList />
+      <div className='SelectShowTimePage__showTimesList'>
+        <ShowTimesList />
+      </div>
+      <div className='SelectShowTimePage__orderSummary'>
+        <OrderSummary />
+      </div>
     </div>
   );
 };

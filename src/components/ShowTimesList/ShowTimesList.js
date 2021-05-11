@@ -6,7 +6,6 @@ const ShowTimesList = () => {
   return (
     <div className='ShowTimesList'>
       <div className='ShowTimesList__header'>
-        <span>Day</span>
         <span>9-11</span>
         <span>11-13</span>
         <span>13-15</span>
@@ -15,13 +14,15 @@ const ShowTimesList = () => {
         <span>19-21</span>
         <span>21-23</span>
       </div>
-      <ShowTimesDay day='Mon' />
-      <ShowTimesDay day='Tue' />
-      <ShowTimesDay day='Wed' />
-      <ShowTimesDay day='Thu' />
-      <ShowTimesDay day='Fri' />
-      <ShowTimesDay day='Sat' />
-      <ShowTimesDay day='Sun' />
+      <div className='ShowTimesList__days'>
+        <ShowTimesDay day='Mon' />
+        <ShowTimesDay day='Tue' />
+        <ShowTimesDay day='Wed' />
+        <ShowTimesDay day='Thu' />
+        <ShowTimesDay day='Fri' />
+        <ShowTimesDay day='Sat' />
+        <ShowTimesDay day='Sun' />
+      </div>
     </div>
   );
 };

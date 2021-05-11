@@ -1,5 +1,13 @@
 import axios from '../../axios-movies';
-import { FETCH_MOVIES, SELECT_MOVIE, DESELECT_MOVIE } from './actionTypes';
+import searchYoutube from 'youtube-api-v3-search';
+import {
+  FETCH_MOVIES,
+  SELECT_MOVIE,
+  DESELECT_MOVIE,
+  YOUTUBE_SEARCH_MOVIE,
+  SELECT_MOVIE_TIME,
+  DESELECT_MOVIE_TIME,
+} from './actionTypes';
 
 //start authorization
 export const fetchAllMovies = (movies) => async (dispatch) => {
@@ -70,4 +78,30 @@ export const selectMovie = (movie) => ({
 //deselect movie
 export const deselectMovie = () => ({
   type: DESELECT_MOVIE,
+});
+
+//search movie on Youtube
+export const searchOnYoutube = (API_KEY, title) => async (dispatch) => {
+  const options = {
+    q: `${title} official trailer`,
+    part: 'snippet',
+    type: 'video',
+  };
+  const youtubeSearch = await searchYoutube(API_KEY, options);
+
+  dispatch({
+    type: YOUTUBE_SEARCH_MOVIE,
+    payload: youtubeSearch.items[0].id.videoId,
+  });
+};
+
+//select movie time
+export const selectMovieTime = (time) => ({
+  type: SELECT_MOVIE_TIME,
+  payload: time,
+});
+
+//deselect movie time
+export const deselectMovieTime = () => ({
+  type: DESELECT_MOVIE_TIME,
 });

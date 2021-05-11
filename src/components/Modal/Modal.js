@@ -5,7 +5,11 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { fetchAllMovies } from '../../store/actions/movies';
-import { selectMovie, deselectMovie } from '../../store/actions/movies';
+import {
+  selectMovie,
+  deselectMovie,
+  searchOnYoutube,
+} from '../../store/actions/movies';
 import { DB } from '../../assets/moviesSeed';
 import './Modal.scss';
 
@@ -17,15 +21,11 @@ const Modal = ({
   selectedMovie,
   selectMovie,
   deselectMovie,
+  searchOnYoutube,
+  youtubeId,
 }) => {
   const movieId = +match.params.movie;
-
-  useEffect(() => {
-    if (_.isEmpty(fetchedMovies)) {
-      const { movies } = DB;
-      fetchAllMovies(movies);
-    }
-  }, [fetchAllMovies, fetchedMovies]);
+  const API_KEY = process.env.REACT_APP_YOUTUBE_KEY;
 
   let title,
     overview,
@@ -36,6 +36,14 @@ const Modal = ({
     vote_average,
     posterUrl,
     backdropUrl;
+
+  useEffect(() => {
+    if (_.isEmpty(fetchedMovies)) {
+      const { movies } = DB;
+      fetchAllMovies(movies);
+    }
+    searchOnYoutube(API_KEY, title);
+  }, [fetchAllMovies, fetchedMovies, searchOnYoutube, title, API_KEY]);
 
   if (!_.isEmpty(fetchedMovies)) {
     title = fetchedMovies[movieId].title;
@@ -61,10 +69,8 @@ const Modal = ({
 
   const renderModal = () => {
     if (_.isEmpty(fetchedMovies)) {
-      console.log('runs');
       return <div>Loading</div>;
     } else {
-      console.log('runs2');
       return (
         <div className='Modal__overlay' onClick={() => history.push('/movies')}>
           <img src={backdropUrl} alt={title} />
@@ -101,7 +107,7 @@ const Modal = ({
                 <iframe
                   //   width='280'
                   //   height='157'
-                  src='https://www.youtube.com/embed/4I3tYjhAROk'
+                  src={`https://www.youtube.com/embed/${youtubeId}`}
                   title='YouTube video player'
                   frameBorder='0'
                   allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
@@ -129,10 +135,14 @@ const Modal = ({
 const mapStateToProps = ({ movies }) => ({
   fetchedMovies: movies.fetchedMovies,
   selectedMovie: movies.selectedMovie,
+  youtubeId: movies.youtubeId,
 });
 
 export default withRouter(
-  connect(mapStateToProps, { fetchAllMovies, selectMovie, deselectMovie })(
-    Modal
-  )
+  connect(mapStateToProps, {
+    fetchAllMovies,
+    selectMovie,
+    deselectMovie,
+    searchOnYoutube,
+  })(Modal)
 );

@@ -7,13 +7,10 @@
     align-items: center;
     padding: 0.2rem 0.5rem;
 
-    span:not(:first-of-type) {
-        border: 1px solid orangered;
-        height: 18px;
-        width: 12.5%;
-    }
 
     span:first-of-type {
         width: 3rem;
     }
+
+
 }

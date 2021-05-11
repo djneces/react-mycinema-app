@@ -33,8 +33,6 @@ export const authInit = () => async (dispatch) => {
         .then(() => {
           const googleAuth = window.gapi.auth2.getAuthInstance();
           resolve(googleAuth);
-          // this.onAuthChange();
-          // this.auth.isSignedIn.listen(this.onAuthChange);
           dispatch({ type: AUTH_INIT, payload: googleAuth.isSignedIn.get() });
         })
         .catch((err) => {
