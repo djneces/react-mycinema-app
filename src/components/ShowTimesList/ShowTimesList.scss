@@ -1,0 +1,13 @@
+@import '../../assets/styles/colors';
+@import '../../assets/styles/utils';
+
+.ShowTimesList {
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.2rem 0.5rem;
+        background-color: $color-primary;
+        border-radius: $border-radius-large $border-radius-large 0 0;
+    }
+}

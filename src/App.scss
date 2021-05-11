@@ -27,7 +27,6 @@ body {
     justify-content: space-between;
     align-items: center;
     border-radius: $border-radius-medium;
-    // background-color: $color-primary;
     height: 96vh;
     width: 97vw;
 }
@@ -44,8 +43,14 @@ input:-webkit-autofill:active {
     width: 7px !important;
 }
 
+
 ::-webkit-scrollbar-thumb {
     border-radius: 4px;
-    background-color: $color-primary;
+    background-color: lighten($color-primary, 30);
     -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+}
+
+//no scrollbar corner visible
+::-webkit-scrollbar-corner {
+    width: 0;
 }

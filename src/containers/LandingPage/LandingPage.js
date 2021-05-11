@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import bgImg from '../../assets/images/cinema-bg.jpg';
 import CustomBtnFull from '../../components/CustomBtnFull/CustomBtnFull';
 import './LandingPage.scss';
@@ -10,7 +11,9 @@ const LandingPage = () => {
       <div className='LandingPage__hero'>
         <div className='LandingPage__hero-heading'>
           <h1>MOVIES</h1>
-          <CustomBtnFull width={'w30'}>Buy tickets</CustomBtnFull>
+          <Link to='/movies'>
+            <CustomBtnFull width={'w30'}>Buy tickets</CustomBtnFull>
+          </Link>
         </div>
         <div className='LandingPage__hero-subheading'>
           <h2>
@@ -19,8 +22,7 @@ const LandingPage = () => {
         </div>
         <div className='LandingPage__footer'>
           <small>
-            "All you need to do is to sit back and immerse yourself in this
-            spectacular world"
+            "Try to sit back and immerse yourself in this spectacular world"
           </small>
           <div className='LandingPage__footer-socialMedia'>
             <span>
