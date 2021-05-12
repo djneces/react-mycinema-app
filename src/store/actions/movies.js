@@ -11,8 +11,9 @@ import {
 
 //start authorization
 export const fetchAllMovies = (movies) => async (dispatch) => {
+  const API_KEY = process.env.REACT_APP_MOVIE_KEY;
   const urls = movies.map(
-    ({ movieId }) => `movie/${movieId}?api_key=5afa2c6f5b404f95b7e3afd73ee8b168`
+    ({ movieId }) => `movie/${movieId}?api_key=${API_KEY}`
   );
 
   Promise.all(

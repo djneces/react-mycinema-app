@@ -28,11 +28,12 @@
             line-height: 2;
 
             &--title,
-            &--date {
+            &--date,
+            &--seats {
                 margin: 1rem 0;
 
                 span:last-of-type {
-                    color: $color-red;
+                    color: $color-primary-light;
                 }
             }
         }
