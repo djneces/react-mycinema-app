@@ -6,12 +6,14 @@ import SelectMoviePage from './containers/SelectMoviePage/SelectMoviePage';
 import SelectShowTimePage from './containers/SelectShowTimePage/SelectShowTimePage';
 import ShowMovieDetailsPage from './containers/ShowMovieDetailsPage/ShowMovieDetailsPage';
 import SelectSeatPage from './containers/SelectSeatPage/SelectSeatPage';
+import Alert from './components/Alert/Alert';
 import './App.scss';
 
 const App = ({ selectedMovie }) => {
   return (
     <BrowserRouter>
       <div className='App'>
+        <Alert />
         <Header />
         <Switch>
           <Route exact path='/' component={LandingPage} />
@@ -25,7 +27,6 @@ const App = ({ selectedMovie }) => {
               selectedMovie ? <SelectShowTimePage /> : <Redirect to='/movies' />
             }
           />
-
           <Route
             exact
             path='/seats'

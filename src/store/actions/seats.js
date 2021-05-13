@@ -1,4 +1,4 @@
-import { SELECT_SEAT, DESELECT_SEAT } from './actionTypes';
+import { SELECT_SEAT, DESELECT_SEAT, CLEAR_SEATS } from './actionTypes';
 
 //select seat
 export const selectSeat = (seat) => ({
@@ -7,6 +7,12 @@ export const selectSeat = (seat) => ({
 });
 
 //deselect seat
-export const deselectSeat = () => ({
+export const deselectSeat = (seat) => ({
   type: DESELECT_SEAT,
+  payload: seat,
+});
+
+//clear seats
+export const clearSeats = () => ({
+  type: CLEAR_SEATS,
 });

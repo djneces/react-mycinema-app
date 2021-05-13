@@ -6,6 +6,7 @@ import {
   onAuthChange,
 } from '../../store/actions/auth';
 import { connect } from 'react-redux';
+import { toggleAccountDetails } from '../../store/actions/accountDetailsMenu';
 import CustomBtnOutline from '../CustomBtnOutline/CustomBtnOutline';
 
 import './GoogleAuth.scss';
@@ -29,18 +30,33 @@ class GoogleAuth extends Component {
 
   onSignOutClick = () => {
     this.props.googleSignOut(this.googleAuth);
+    this.props.toggleAccountDetails();
+  };
+
+  toggleMenu = () => {
+    this.props.toggleAccountDetails();
   };
 
   renderAuthButton() {
-    const { isAuthenticated, username } = this.props;
+    const { isAuthenticated, username, toggle } = this.props;
+
     if (isAuthenticated === null) {
       return null;
-    } else if (isAuthenticated) {
+    } else if (isAuthenticated && !toggle) {
       return (
         <div className='GoogleAuth__userProfile'>
           <span>Hello, </span>
           <span>{username}</span>
-          <i className='far fa-user'></i>
+          <i className='far fa-user' onClick={this.toggleMenu}></i>
+        </div>
+      );
+    } else if (isAuthenticated && toggle) {
+      return (
+        <div
+          className='GoogleAuth__userProfile-logout'
+          onClick={this.onSignOutClick}
+        >
+          <i className='fas fa-sign-out-alt'></i> Logout
         </div>
       );
     } else {
@@ -60,9 +76,10 @@ class GoogleAuth extends Component {
   }
 }
 
-const mapStateToProps = ({ auth }) => ({
+const mapStateToProps = ({ auth, toggleMenu }) => ({
   isAuthenticated: auth.isAuthenticated,
   username: auth.currentUser?.username,
+  toggle: toggleMenu,
 });
 
 export default connect(mapStateToProps, {
@@ -70,4 +87,5 @@ export default connect(mapStateToProps, {
   googleSignIn,
   googleSignOut,
   onAuthChange,
+  toggleAccountDetails,
 })(GoogleAuth);

@@ -1,7 +1,11 @@
-import { SELECT_SEAT, DESELECT_SEAT } from '../actions/actionTypes';
+import {
+  SELECT_SEAT,
+  DESELECT_SEAT,
+  CLEAR_SEATS,
+} from '../actions/actionTypes';
 
 const INITIAL_STATE = {
-  selectedSeat: null,
+  selectedSeats: [],
 };
 
 const seatsReducer = (state = INITIAL_STATE, action) => {
@@ -10,12 +14,22 @@ const seatsReducer = (state = INITIAL_STATE, action) => {
     case SELECT_SEAT:
       return {
         ...state,
-        selectedSeat: payload,
+        selectedSeats: [...state.selectedSeats, payload],
       };
     case DESELECT_SEAT:
       return {
         ...state,
-        selectedSeat: null,
+        selectedSeats: [
+          ...state.selectedSeats.filter(
+            (movie) =>
+              !(movie.row === payload.row && movie.seat === payload.seat)
+          ),
+        ],
+      };
+    case CLEAR_SEATS:
+      return {
+        ...state,
+        selectedSeats: [],
       };
     default:
       return state;

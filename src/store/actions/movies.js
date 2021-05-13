@@ -7,6 +7,7 @@ import {
   YOUTUBE_SEARCH_MOVIE,
   SELECT_MOVIE_TIME,
   DESELECT_MOVIE_TIME,
+  CLEAR_MOVIES,
 } from './actionTypes';
 
 //start authorization
@@ -105,4 +106,9 @@ export const selectMovieTime = (time) => ({
 //deselect movie time
 export const deselectMovieTime = () => ({
   type: DESELECT_MOVIE_TIME,
+});
+
+//clear movie selections
+export const clearMovie = () => ({
+  type: CLEAR_MOVIES,
 });

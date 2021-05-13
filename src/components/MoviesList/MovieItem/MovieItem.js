@@ -53,6 +53,7 @@ const MovieItem = ({
                 src={posterUrl}
                 style={loaded ? {} : { display: 'none' }}
                 onLoad={() => setLoaded(true)}
+                onClick={() => history.push(`/movies/${movieId}`)}
                 alt='poster'
                 className={`${
                   selectedMovie !== movieId && selectedMovie !== null

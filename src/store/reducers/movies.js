@@ -5,6 +5,7 @@ import {
   YOUTUBE_SEARCH_MOVIE,
   SELECT_MOVIE_TIME,
   DESELECT_MOVIE_TIME,
+  CLEAR_MOVIES,
 } from '../actions/actionTypes';
 
 const INITIAL_STATE = {
@@ -46,6 +47,13 @@ const moviesReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         youtubeId: payload,
+      };
+    case CLEAR_MOVIES:
+      return {
+        ...state,
+        selectedMovie: null,
+        selectedMovieTime: null,
+        youtubeId: null,
       };
     default:
       return state;

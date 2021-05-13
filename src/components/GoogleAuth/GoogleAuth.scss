@@ -17,15 +17,45 @@
             font-size: 1.8rem;
             margin-left: 1rem;
             cursor: pointer;
+            transition: color $transition-time-faster ease-in;
 
             &:hover {
-                color: $color-primary-light;
+                color: $color-orangered;
             }
         }
 
         span:last-of-type:not(:first-of-type) {
             color: $color-primary-light;
             margin: 0 0.5rem;
+        }
+
+        &-logout {
+            height: 100%;
+            cursor: pointer;
+            display: flex;
+            width: 5rem;
+            align-items: flex-end;
+            margin-left: auto;
+
+            &::after {
+                content: '';
+                height: 50%;
+                width: 2px;
+                background-color: orangered;
+                position: absolute;
+                bottom: -0.2rem;
+                right: 1rem;
+                opacity: 0.6;
+            }
+
+
+            i {
+                margin: 0 1rem 2px 0;
+            }
+
+            &:hover {
+                color: $color-orangered;
+            }
         }
     }
 }

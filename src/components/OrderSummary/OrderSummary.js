@@ -3,16 +3,24 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 import CustomBtnFull from '../CustomBtnFull/CustomBtnFull';
+import SpinnerDots from '../SpinnerDots/SpinnerDots';
 import { DB } from '../../assets/moviesSeed';
+import { createOrder } from '../../store/actions/purchase';
 import './OrderSummary.scss';
+import { setAlert } from '../../store/actions/alert';
 
 const OrderSummary = ({
   selectedMovie,
-  selectedSeat,
+  selectedSeats,
   fetchedMovies,
   selectedMovieTime,
   history,
   location,
+  userId,
+  createOrder,
+  orderIsLoading,
+  isAuthenticated,
+  setAlert,
 }) => {
   const { movies } = DB;
 
@@ -26,6 +34,32 @@ const OrderSummary = ({
   const onClick = () => {
     if (location.pathname === '/movies') history.push('/times');
     if (location.pathname === '/times') history.push('/seats');
+    //after selecting seats on /seats page, btn send and order to the DB
+    if (location.pathname === '/seats' && isAuthenticated) {
+      const ticketOrder = { selectedMovie, selectedMovieTime, selectedSeats };
+      createOrder(ticketOrder, userId, history);
+    }
+    // else {
+    //   setAlert('Please, login first', 'danger');
+    // }
+  };
+
+  const renderDisabledBtn = () => {
+    let disabled;
+    if (location.pathname === '/movies') {
+      disabled = !selectedMovie;
+    }
+    if (location.pathname === '/times') {
+      disabled = !selectedMovieTime;
+    }
+    if (location.pathname === '/seats') {
+      if (isAuthenticated === false) {
+        disabled = true;
+      } else {
+        disabled = selectedSeats && selectedSeats.length === 0;
+      }
+    }
+    return disabled;
   };
 
   return (
@@ -56,16 +90,20 @@ const OrderSummary = ({
                   )}
                 </div>
               ) : null}
-              {location.pathname === '/seats' && selectedSeat && (
-                <div className='OrderSummary__review-details--seats'>
-                  Seats:
-                  <br></br>
-                  <span>
-                    Seat: {selectedSeat && selectedSeat.seat} Row:{' '}
-                    {selectedSeat && selectedSeat.row} / Hall: {movieHall.hall}
-                  </span>
-                </div>
-              )}
+              {location.pathname === '/seats' &&
+                selectedSeats &&
+                selectedSeats.length > 0 && (
+                  <div className='OrderSummary__review-details--seats'>
+                    Number of seats:
+                    <br></br>
+                    <span>
+                      {selectedSeats &&
+                        selectedSeats.length > 0 &&
+                        selectedSeats.length}{' '}
+                      / Hall: {movieHall.hall}
+                    </span>
+                  </div>
+                )}
             </div>
             <div className='OrderSummary__review-poster'>
               {selectedMovie && (
@@ -81,17 +119,32 @@ const OrderSummary = ({
         )}
       </div>
       <div className='OrderSummary__btn'>
-        <CustomBtnFull onclick={onClick}>Continue</CustomBtnFull>
+        <CustomBtnFull onclick={onClick} disabled={renderDisabledBtn()}>
+          <span>
+            Continue
+            {location.pathname === '/seats' && isAuthenticated === false ? (
+              <span>Please, login first</span>
+            ) : (
+              ''
+            )}
+          </span>{' '}
+          {orderIsLoading && <SpinnerDots />}
+        </CustomBtnFull>
       </div>
     </div>
   );
 };
 
-const mapStateToProps = ({ movies, seats }) => ({
+const mapStateToProps = ({ movies, seats, auth, orders }) => ({
   fetchedMovies: movies.fetchedMovies,
   selectedMovie: movies.selectedMovie,
   selectedMovieTime: movies.selectedMovieTime,
-  selectedSeat: seats.selectedSeat,
+  selectedSeats: seats.selectedSeats,
+  userId: auth.currentUser?.id,
+  isAuthenticated: auth.isAuthenticated,
+  orderIsLoading: orders.loading,
 });
 
-export default withRouter(connect(mapStateToProps)(OrderSummary));
+export default withRouter(
+  connect(mapStateToProps, { createOrder, setAlert })(OrderSummary)
+);

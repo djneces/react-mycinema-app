@@ -10,7 +10,7 @@ const Seat = ({
   rowNumber,
   selectSeat,
   deselectSeat,
-  selectedSeat,
+  selectedSeats,
 }) => {
   const onClickSeat = { seat: seatNumber, row: rowNumber };
 
@@ -21,11 +21,15 @@ const Seat = ({
 
   const renderSeat = () => {
     return (
+      //renders styles for taken seats(booked) and selected seats
       <div
         className={`Seat ${bookedSeats && 'booked'} ${
-          selectedSeat &&
-          selectedSeat.seat === onClickSeat.seat &&
-          selectedSeat.row === onClickSeat.row
+          selectedSeats &&
+          selectedSeats.some(
+            (savedSeat) =>
+              savedSeat.seat === onClickSeat.seat &&
+              savedSeat.row === onClickSeat.row
+          )
             ? 'selected'
             : ''
         }`}
@@ -38,11 +42,14 @@ const Seat = ({
   const renderClick = () => {
     //compare clicked time-block with what is in Redux
     if (
-      selectedSeat &&
-      selectedSeat.seat === onClickSeat.seat &&
-      selectedSeat.row === onClickSeat.row
+      selectedSeats &&
+      selectedSeats.some(
+        (savedSeat) =>
+          savedSeat.seat === onClickSeat.seat &&
+          savedSeat.row === onClickSeat.row
+      )
     ) {
-      deselectSeat();
+      deselectSeat(onClickSeat);
       return;
     }
 
@@ -52,7 +59,7 @@ const Seat = ({
 };
 
 const mapStateToProps = ({ seats }) => ({
-  selectedSeat: seats.selectedSeat,
+  selectedSeats: seats.selectedSeats,
 });
 
 export default connect(mapStateToProps, { selectSeat, deselectSeat })(Seat);
