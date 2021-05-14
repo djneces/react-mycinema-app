@@ -1,8 +1,9 @@
 import axios from '../../axios-orders';
 
-import { setAlert } from '../../store/actions/alert';
-import { clearMovie } from '../../store/actions/movies';
-import { clearSeats } from '../../store/actions/seats';
+import { setAlert } from './alert';
+import { clearMovie } from './movies';
+import { clearSeats } from './seats';
+import { fetchOrderHistory } from './orderHistory';
 
 import {
   PURCHASE_START,
@@ -67,6 +68,7 @@ export const createOrder = (orderDetails, userId, history) => (dispatch) => {
             )
           );
         }, 3000);
+        dispatch(fetchOrderHistory(userId));
       } else {
         dispatch(purchaseFail(response.statusText));
       }

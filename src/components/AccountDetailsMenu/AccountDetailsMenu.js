@@ -1,6 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { toggleAccountDetails } from '../../store/actions/accountDetailsMenu';
 
 import './AccountDetailsMenu.scss';
 
@@ -28,12 +29,10 @@ const AccountDetails = ({ toggleAccountDetails, history }) => {
         <i className='far fa-user-circle'></i>
         Profile
       </div>
-      {/* <div onClick={onSignOut} className='AccountDetails__signOut'>
-        <i className='fas fa-sign-out-alt'></i>
-        Sign Out
-      </div> */}
     </div>
   );
 };
 
-export default withRouter(connect(null)(AccountDetails));
+export default withRouter(
+  connect(null, { toggleAccountDetails })(AccountDetails)
+);

@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 
 import CustomBtnFull from '../CustomBtnFull/CustomBtnFull';
 import SpinnerDots from '../SpinnerDots/SpinnerDots';
+import { v4 as uuidv4 } from 'uuid';
 import { DB } from '../../assets/moviesSeed';
 import { createOrder } from '../../store/actions/purchase';
 import './OrderSummary.scss';
@@ -20,28 +21,36 @@ const OrderSummary = ({
   createOrder,
   orderIsLoading,
   isAuthenticated,
-  setAlert,
 }) => {
   const { movies } = DB;
 
-  const movieHall = movies.find((movie) => {
+  //matching selected movie title with fetched movies {}
+  const movieOnSelect = movies.find((movie) => {
     if (!selectedMovie) {
       return null;
     }
     return movie.title === fetchedMovies[selectedMovie].title;
   });
+  //getting hall # of selected movie
+  const movieOnSelectHall = movieOnSelect && movieOnSelect.hall;
 
   const onClick = () => {
     if (location.pathname === '/movies') history.push('/times');
     if (location.pathname === '/times') history.push('/seats');
     //after selecting seats on /seats page, btn send and order to the DB
     if (location.pathname === '/seats' && isAuthenticated) {
-      const ticketOrder = { selectedMovie, selectedMovieTime, selectedSeats };
+      const ticketId = uuidv4().toString().slice(0, 5);
+      const createdAt = new Date();
+      const ticketOrder = {
+        selectedMovie,
+        selectedMovieTime,
+        selectedSeats,
+        ticketId,
+        createdAt,
+        movieOnSelectHall,
+      };
       createOrder(ticketOrder, userId, history);
     }
-    // else {
-    //   setAlert('Please, login first', 'danger');
-    // }
   };
 
   const renderDisabledBtn = () => {
@@ -100,7 +109,7 @@ const OrderSummary = ({
                       {selectedSeats &&
                         selectedSeats.length > 0 &&
                         selectedSeats.length}{' '}
-                      / Hall: {movieHall.hall}
+                      / Hall: {movieOnSelectHall}
                     </span>
                   </div>
                 )}
@@ -146,5 +155,5 @@ const mapStateToProps = ({ movies, seats, auth, orders }) => ({
 });
 
 export default withRouter(
-  connect(mapStateToProps, { createOrder, setAlert })(OrderSummary)
+  connect(mapStateToProps, { createOrder })(OrderSummary)
 );

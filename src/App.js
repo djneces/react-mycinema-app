@@ -6,6 +6,7 @@ import SelectMoviePage from './containers/SelectMoviePage/SelectMoviePage';
 import SelectShowTimePage from './containers/SelectShowTimePage/SelectShowTimePage';
 import ShowMovieDetailsPage from './containers/ShowMovieDetailsPage/ShowMovieDetailsPage';
 import SelectSeatPage from './containers/SelectSeatPage/SelectSeatPage';
+import OrderHistoryPage from './containers/OrderHistoryPage/OrderHistoryPage';
 import Alert from './components/Alert/Alert';
 import './App.scss';
 
@@ -34,6 +35,7 @@ const App = ({ selectedMovie }) => {
               selectedMovie ? <SelectSeatPage /> : <Redirect to='/movies' />
             }
           />
+          <Route exact path='/orders' component={OrderHistoryPage} />
         </Switch>
       </div>
     </BrowserRouter>

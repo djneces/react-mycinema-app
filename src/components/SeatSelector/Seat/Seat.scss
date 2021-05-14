@@ -11,6 +11,7 @@
     justify-content: center;
     margin: 0.2rem;
     cursor: pointer;
+    position: relative;
 
     &:hover {
         border-color: $color-orangered;

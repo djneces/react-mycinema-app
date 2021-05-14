@@ -1,0 +1,179 @@
+@import '../../../assets/styles/colors';
+@import '../../../assets/styles/utils';
+
+.OrderListItem {
+    font-family: 'Faustina';
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    background-color: #F7F7EB;
+    border: 1px solid black;
+    width: 90%;
+    max-width: 600px;
+    max-height: 250px;
+    margin: 2rem 0;
+    color: black;
+    height: 100%;
+    position: relative;
+
+    &__createdAt {
+        position: absolute;
+        top: -25px;
+        left: 0;
+        color: #fff;
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    &__divider {
+        position: absolute;
+        top: 0;
+        left: 29%;
+        width: 2px;
+        height: 100%;
+
+        &:before {
+            content: '';
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            top: 0;
+            left: 0;
+            transform: translate(-50%, -35%);
+            background-color: black;
+        }
+
+        &:after {
+            content: '';
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            bottom: 0;
+            left: 0;
+            transform: translate(-50%, 35%);
+            background-color: black;
+        }
+
+    }
+
+    &__leftSide {
+        width: 25%;
+        writing-mode: vertical-rl;
+        border: 1px solid black;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 100%;
+
+        &-title,
+        &-time {
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-align: center;
+            border-left: 1px dotted black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        &-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+
+            &-seat {
+                padding: .5rem;
+                display: flex;
+                border-bottom: 1px dotted black;
+
+                div {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    margin: 0.5rem 0;
+                    font-size: 0.8rem;
+                }
+
+
+            }
+
+            &-id {
+                padding: .5rem .5rem .5rem 0;
+                font-size: 1.8rem;
+                color: $color-red;
+                font-family: 'Special Elite';
+            }
+        }
+    }
+
+    &__rightSide {
+        width: 75%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border-left: 1px dashed;
+        margin-left: 1rem;
+
+        &-title {
+            font-size: 2.5rem;
+            border-top: 1px solid black;
+            border-bottom: 1px solid black;
+            padding: 0.5rem 0;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        &-time {
+            margin-bottom: 0.5rem;
+        }
+
+        &-footer {
+            width: 85%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-top: 1px solid black;
+            border-bottom: 1px solid black;
+            margin-top: 2rem;
+
+            &-seat {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                width: 50%;
+
+                div {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                }
+            }
+
+            &-price {
+                font-size: 3rem;
+                border-left: 1px solid black;
+                padding-left: 2rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                span {
+                    font-size: 2rem;
+                    align-self: flex-start;
+                    margin-right: 0.5rem;
+                }
+            }
+        }
+    }
+}
