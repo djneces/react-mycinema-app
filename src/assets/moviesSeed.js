@@ -1,3 +1,5 @@
+export const TICKET_PRICE = 15;
+
 export const occupiedSeats = {
   1: [1, 2, 3],
   2: [14, 15],

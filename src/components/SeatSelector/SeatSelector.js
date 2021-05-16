@@ -3,14 +3,6 @@ import Row from './Row/Row';
 import './SeatSelector.scss';
 
 const SeatSelector = () => {
-  //   const renderSeatingPlan = () => {
-  //     //creates an array 1-13 (rows in the cinema)
-  //     return Array.from({ length: 13 }, (_, i) => i + 1).map((row) => (
-  //       <div className='SeatSelector__row' key={row}>
-  //         {renderRow()}
-  //       </div>
-  //     ));
-  //   };
   return (
     <div className='SeatSelector'>
       <div className='SeatSelector__screen'></div>

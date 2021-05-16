@@ -7,7 +7,7 @@ import './AccountDetailsMenu.scss';
 
 const AccountDetails = ({ toggleAccountDetails, history }) => {
   const renderPurchaseHistory = () => {
-    history.push('/orders');
+    history.push('/tickets');
     toggleAccountDetails();
   };
 
@@ -23,7 +23,7 @@ const AccountDetails = ({ toggleAccountDetails, history }) => {
         className='AccountDetails__purchaseHistory'
       >
         <i className='fas fa-money-bill-wave'></i>
-        Purchase History
+        Your Tickets
       </div>
       <div onClick={renderProfile} className='AccountDetails__profile'>
         <i className='far fa-user-circle'></i>

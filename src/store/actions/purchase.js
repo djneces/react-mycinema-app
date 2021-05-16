@@ -4,6 +4,7 @@ import { setAlert } from './alert';
 import { clearMovie } from './movies';
 import { clearSeats } from './seats';
 import { fetchOrderHistory } from './orderHistory';
+import { clearAllAddOns } from './addons';
 
 import {
   PURCHASE_START,
@@ -55,6 +56,7 @@ export const createOrder = (orderDetails, userId, history) => (dispatch) => {
           history.push('/');
           dispatch(clearMovie());
           dispatch(clearSeats());
+          dispatch(clearAllAddOns());
         }, 2000);
         //delayed notification after successful purchase
         setTimeout(() => {

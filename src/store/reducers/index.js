@@ -10,12 +10,13 @@ import purchaseReducer from './purchase';
 import alertReducer from './alert';
 import toggleMenuReducer from './accountDetailsMenu';
 import orderHistoryReducer from './orderHistory';
+import addonsReducer from './addons';
 
 const persistConfig = {
   key: 'root',
   storage,
   //reducers we need to persist
-  whitelist: ['auth', 'movies', 'seats'],
+  // whitelist: ['auth', 'movies', 'seats'],
 };
 
 const rootReducer = combineReducers({
@@ -26,6 +27,7 @@ const rootReducer = combineReducers({
   alerts: alertReducer,
   toggleMenu: toggleMenuReducer,
   orderHistory: orderHistoryReducer,
+  addOns: addonsReducer,
 });
 
 export default persistReducer(persistConfig, rootReducer);

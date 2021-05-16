@@ -7,10 +7,11 @@ import SelectShowTimePage from './containers/SelectShowTimePage/SelectShowTimePa
 import ShowMovieDetailsPage from './containers/ShowMovieDetailsPage/ShowMovieDetailsPage';
 import SelectSeatPage from './containers/SelectSeatPage/SelectSeatPage';
 import OrderHistoryPage from './containers/OrderHistoryPage/OrderHistoryPage';
+import AddOnsPage from './containers/AddOnsPage/AddOnsPage';
 import Alert from './components/Alert/Alert';
 import './App.scss';
 
-const App = ({ selectedMovie }) => {
+const App = ({ selectedMovie, selectedMovieTime, selectedSeats }) => {
   return (
     <BrowserRouter>
       <div className='App'>
@@ -20,7 +21,7 @@ const App = ({ selectedMovie }) => {
           <Route exact path='/' component={LandingPage} />
           <Route exact path='/movies' component={SelectMoviePage} />
           <Route exact path='/movies/:movie' component={ShowMovieDetailsPage} />
-          {/* render times and seats only when a movie selected */}
+          {/* render /times only when a movie selected */}
           <Route
             exact
             path='/times'
@@ -28,22 +29,41 @@ const App = ({ selectedMovie }) => {
               selectedMovie ? <SelectShowTimePage /> : <Redirect to='/movies' />
             }
           />
+          {/* render /movies only when a movie and a time selected */}
           <Route
             exact
             path='/seats'
             render={() =>
-              selectedMovie ? <SelectSeatPage /> : <Redirect to='/movies' />
+              selectedMovie && selectedMovieTime ? (
+                <SelectSeatPage />
+              ) : (
+                <Redirect to='/movies' />
+              )
             }
           />
-          <Route exact path='/orders' component={OrderHistoryPage} />
+          {/* render /addons only when a movie, a time and a seat selected */}
+          <Route
+            exact
+            path='/addons'
+            render={() =>
+              selectedMovie && selectedMovieTime && selectedSeats.length > 0 ? (
+                <AddOnsPage />
+              ) : (
+                <Redirect to='/movies' />
+              )
+            }
+          />
+          <Route exact path='/tickets' component={OrderHistoryPage} />
         </Switch>
       </div>
     </BrowserRouter>
   );
 };
 
-const mapStateToProps = ({ movies }) => ({
+const mapStateToProps = ({ movies, seats }) => ({
   selectedMovie: movies.selectedMovie,
+  selectedMovieTime: movies.selectedMovieTime,
+  selectedSeats: seats.selectedSeats,
 });
 
 export default connect(mapStateToProps)(App);

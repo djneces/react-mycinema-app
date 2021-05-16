@@ -21,6 +21,11 @@ export const authFail = (error) => ({
 //init gapi
 export const authInit = () => async (dispatch) => {
   const auth = new Promise((resolve, reject) => {
+    if (!window.gapi) {
+      console.error('Network connection error');
+      Error('Network connection error');
+      return;
+    }
     window.gapi.load('client:auth2', () => {
       window.gapi.client
         .init({

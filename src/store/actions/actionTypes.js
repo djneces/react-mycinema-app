@@ -31,3 +31,7 @@ export const SET_ALERT = 'SET_ALERT';
 export const REMOVE_ALERT = 'REMOVE_ALERT';
 
 export const TOGGLE_ACCOUNT_DETAILS = 'TOGGLE_ACCOUNT_DETAILS';
+
+export const ADD_ADDON = 'ADD_ADDON';
+export const REMOVE_ADDON = 'REMOVE_ADDON';
+export const CLEAR_ALL_ADDONS = 'CLEAR_ALL_ADDONS';

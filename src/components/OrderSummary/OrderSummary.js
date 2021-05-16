@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
@@ -8,7 +8,6 @@ import { v4 as uuidv4 } from 'uuid';
 import { DB } from '../../assets/moviesSeed';
 import { createOrder } from '../../store/actions/purchase';
 import './OrderSummary.scss';
-import { setAlert } from '../../store/actions/alert';
 
 const OrderSummary = ({
   selectedMovie,
@@ -22,6 +21,7 @@ const OrderSummary = ({
   orderIsLoading,
   isAuthenticated,
 }) => {
+  const [imageLoaded, setImageLoaded] = useState(false);
   const { movies } = DB;
 
   //matching selected movie title with fetched movies {}
@@ -37,8 +37,8 @@ const OrderSummary = ({
   const onClick = () => {
     if (location.pathname === '/movies') history.push('/times');
     if (location.pathname === '/times') history.push('/seats');
-    //after selecting seats on /seats page, btn send and order to the DB
-    if (location.pathname === '/seats' && isAuthenticated) {
+    if (location.pathname === '/seats') history.push('/addons');
+    if (location.pathname === '/addons' && isAuthenticated) {
       const ticketId = uuidv4().toString().slice(0, 5);
       const createdAt = new Date();
       const ticketOrder = {
@@ -62,10 +62,11 @@ const OrderSummary = ({
       disabled = !selectedMovieTime;
     }
     if (location.pathname === '/seats') {
+      disabled = selectedSeats && selectedSeats.length === 0;
+    }
+    if (location.pathname === '/addons') {
       if (isAuthenticated === false) {
         disabled = true;
-      } else {
-        disabled = selectedSeats && selectedSeats.length === 0;
       }
     }
     return disabled;
@@ -86,9 +87,10 @@ const OrderSummary = ({
                     : 'Please, select a movie'}
                 </span>
               </div>
-              {/* shows date & time only on times and seats page */}
+              {/* shows date & time only on times, seats, addons page */}
               {location.pathname === '/times' ||
-              location.pathname === '/seats' ? (
+              location.pathname === '/seats' ||
+              location.pathname === '/addons' ? (
                 <div className='OrderSummary__review-details--date'>
                   Date & Time:
                   <br></br>
@@ -99,26 +101,33 @@ const OrderSummary = ({
                   )}
                 </div>
               ) : null}
-              {location.pathname === '/seats' &&
-                selectedSeats &&
-                selectedSeats.length > 0 && (
-                  <div className='OrderSummary__review-details--seats'>
-                    Number of seats:
-                    <br></br>
-                    <span>
-                      {selectedSeats &&
-                        selectedSeats.length > 0 &&
-                        selectedSeats.length}{' '}
-                      / Hall: {movieOnSelectHall}
-                    </span>
-                  </div>
-                )}
+              {/* shows selected seats only on seats, addons page */}
+              {location.pathname === '/seats' ||
+              location.pathname === '/addons' ? (
+                <>
+                  {selectedSeats && selectedSeats.length > 0 && (
+                    <div className='OrderSummary__review-details--seats'>
+                      Number of seats:
+                      <br></br>
+                      <span>
+                        {selectedSeats &&
+                          selectedSeats.length > 0 &&
+                          selectedSeats.length}{' '}
+                        / Hall: {movieOnSelectHall}
+                      </span>
+                    </div>
+                  )}
+                </>
+              ) : null}
             </div>
             <div className='OrderSummary__review-poster'>
               {selectedMovie && (
                 <img
+                  //added box shadow only after the img loaded
+                  className={imageLoaded ? 'boxShadow' : ''}
                   src={fetchedMovies[selectedMovie].posterUrl}
                   alt={fetchedMovies[selectedMovie].title}
+                  onLoad={() => setImageLoaded(true)}
                 />
               )}
             </div>
@@ -128,10 +137,14 @@ const OrderSummary = ({
         )}
       </div>
       <div className='OrderSummary__btn'>
-        <CustomBtnFull onclick={onClick} disabled={renderDisabledBtn()}>
+        <CustomBtnFull
+          onclick={onClick}
+          disabled={renderDisabledBtn()}
+          width={'w30'}
+        >
           <span>
             Continue
-            {location.pathname === '/seats' && isAuthenticated === false ? (
+            {location.pathname === '/addons' && isAuthenticated === false ? (
               <span>Please, login first</span>
             ) : (
               ''
