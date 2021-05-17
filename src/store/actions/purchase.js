@@ -3,8 +3,8 @@ import axios from '../../axios-orders';
 import { setAlert } from './alert';
 import { clearMovie } from './movies';
 import { clearSeats } from './seats';
-import { fetchOrderHistory } from './orderHistory';
 import { clearAllAddOns } from './addons';
+import { fetchOrderHistory } from './orderHistory';
 
 import {
   PURCHASE_START,

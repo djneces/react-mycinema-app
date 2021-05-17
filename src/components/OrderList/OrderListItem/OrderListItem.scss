@@ -10,13 +10,68 @@
     background-color: $color-white-vintage;
     border: 1px solid black;
     width: 90%;
-    max-width: 600px;
-    max-height: 250px;
-    margin: 2rem 0;
+    max-width: 650px;
+    height: 285px;
+    max-height: 285px;
+    margin: 2rem 0 0;
     color: black;
-    height: 100%;
     position: relative;
     cursor: pointer;
+    box-sizing: border-box;
+
+    &__wrapper {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 3rem;
+        background-color: rgba(255, 255, 255, 0.1);
+        position: relative;
+
+        &-addons {
+            width: 90%;
+            margin-bottom: 2rem;
+            max-width: 650px;
+
+            &-items {
+                display: flex;
+                align-items: flex-start;
+                justify-content: flex-start;
+
+                &--item {
+                    width: 25%;
+
+                    h4 {
+                        margin: 0.5rem 0;
+                        width: 150px;
+                        max-width: 250px;
+                    }
+
+                    div {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        font-size: 0.8rem;
+                        color: $color-primary-light;
+                        margin-right: 2rem;
+
+                        span {
+
+                            &:first-of-type,
+                            &:last-of-type {
+                                width: 50px;
+                            }
+
+                            &:last-of-type {
+                                text-align: right;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+    }
 
     &:hover &__print {
         opacity: 1;
@@ -117,7 +172,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-
+            height: 100%;
 
             &-seat {
                 padding: .5rem;
@@ -137,10 +192,11 @@
             }
 
             &-id {
-                padding: .5rem .5rem .5rem 0;
+                // padding: .5rem .5rem .5rem 0;
                 font-size: 1.8rem;
                 color: $color-red;
                 font-family: 'Special Elite';
+                height: 83px;
             }
         }
     }

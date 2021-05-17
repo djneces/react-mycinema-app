@@ -20,6 +20,7 @@ const OrderSummary = ({
   createOrder,
   orderIsLoading,
   isAuthenticated,
+  addOns,
 }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
   const { movies } = DB;
@@ -48,6 +49,7 @@ const OrderSummary = ({
         ticketId,
         createdAt,
         movieOnSelectHall,
+        addOns,
       };
       createOrder(ticketOrder, userId, history);
     }
@@ -157,7 +159,7 @@ const OrderSummary = ({
   );
 };
 
-const mapStateToProps = ({ movies, seats, auth, orders }) => ({
+const mapStateToProps = ({ movies, seats, auth, orders, addOns }) => ({
   fetchedMovies: movies.fetchedMovies,
   selectedMovie: movies.selectedMovie,
   selectedMovieTime: movies.selectedMovieTime,
@@ -165,6 +167,7 @@ const mapStateToProps = ({ movies, seats, auth, orders }) => ({
   userId: auth.currentUser?.id,
   isAuthenticated: auth.isAuthenticated,
   orderIsLoading: orders.loading,
+  addOns: addOns.addOns,
 });
 
 export default withRouter(

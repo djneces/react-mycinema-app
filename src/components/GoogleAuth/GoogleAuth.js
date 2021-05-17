@@ -7,6 +7,9 @@ import {
 } from '../../store/actions/auth';
 import { connect } from 'react-redux';
 import { toggleAccountDetails } from '../../store/actions/accountDetailsMenu';
+import { clearMovie } from '../../store/actions/movies';
+import { clearSeats } from '../../store/actions/seats';
+import { clearAllAddOns } from '../../store/actions/addons';
 import CustomBtnOutline from '../CustomBtnOutline/CustomBtnOutline';
 
 import './GoogleAuth.scss';
@@ -24,13 +27,18 @@ class GoogleAuth extends Component {
     this.props.onAuthChange(this.googleAuth);
   };
 
+  //sign In
   onSignInClick = () => {
     this.props.googleSignIn(this.googleAuth);
   };
 
+  //sign Out
   onSignOutClick = () => {
     this.props.googleSignOut(this.googleAuth);
     this.props.toggleAccountDetails();
+    this.props.clearMovie();
+    this.props.clearSeats();
+    this.props.clearAllAddOns();
   };
 
   toggleMenu = () => {
@@ -88,4 +96,7 @@ export default connect(mapStateToProps, {
   googleSignOut,
   onAuthChange,
   toggleAccountDetails,
+  clearMovie,
+  clearSeats,
+  clearAllAddOns,
 })(GoogleAuth);

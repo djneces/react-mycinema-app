@@ -1,42 +1,13 @@
-import _ from 'lodash';
 import React from 'react';
 import { connect } from 'react-redux';
 import { TICKET_PRICE } from '../../assets/moviesSeed';
+import { renderAddOnType, isSelected, isAddOnsEmpty } from './AddOnsUtil';
 import './AddOnsSummary.scss';
 
 const AddOnsSummary = ({ addOns, selectedSeats }) => {
   const seatNumbers = selectedSeats
     .map((seat) => `seat ${seat.seat}/ row ${seat.row}`)
     .join(', ');
-
-  const renderAddOnType = (addOn) => {
-    return Object.values(addOns).map(
-      ({ id, item, size, price, quantity }) =>
-        item === addOn &&
-        quantity > 0 && (
-          <div className={`AddOnsSummary__item-${addOn}`} key={id}>
-            <span>
-              {size === 'xl' ? 'Large' : size === 'md' ? 'Medium' : 'Small'}{' '}
-            </span>
-            <span>x {quantity}</span>
-            <span>{`($${(price * quantity).toFixed(2)})`}</span>
-          </div>
-        )
-    );
-  };
-
-  const isSelected = (addOn) => {
-    return Object.values(addOns).some(
-      (item) => item.item === addOn && item.quantity > 0
-    );
-  };
-
-  const isAddOnsEmpty = () => {
-    return (
-      _.isEmpty(addOns) ||
-      Object.values(addOns).every((item) => item.quantity === 0)
-    );
-  };
 
   const calculateTotal = () => {
     const addOnsTotal = Object.values(addOns)
@@ -48,27 +19,27 @@ const AddOnsSummary = ({ addOns, selectedSeats }) => {
 
   return (
     <div className='AddOnsSummary'>
-      {!isAddOnsEmpty() ? (
+      {!isAddOnsEmpty(addOns) ? (
         <>
           <h3>Your AddOns</h3>
           <div className='AddOnsSummary__items'>
-            {isSelected('coffee') && (
+            {isSelected('coffee', addOns) && (
               <div className='AddOnsSummary__items-item'>
                 <h4>Coffee</h4>
-                {renderAddOnType('coffee')}
+                {renderAddOnType('coffee', addOns)}
               </div>
             )}
 
-            {isSelected('coke') && (
+            {isSelected('coke', addOns) && (
               <div className='AddOnsSummary__items-item'>
                 <h4>Coke</h4>
-                {renderAddOnType('coke')}
+                {renderAddOnType('coke', addOns)}
               </div>
             )}
-            {isSelected('popcorn') && (
+            {isSelected('popcorn', addOns) && (
               <div className='AddOnsSummary__items-item'>
                 <h4>Popcorn</h4>
-                {renderAddOnType('popcorn')}
+                {renderAddOnType('popcorn', addOns)}
               </div>
             )}
           </div>

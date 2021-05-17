@@ -1,8 +1,12 @@
 import _ from 'lodash';
 import React, { useState } from 'react';
 import moment from 'moment';
-
 import { connect } from 'react-redux';
+import {
+  renderAddOnType,
+  isSelected,
+  isAddOnsEmpty,
+} from '../../AddOnsSummary/AddOnsUtil';
 
 import './OrderListItem.scss';
 
@@ -14,22 +18,14 @@ const OrderListItem = ({
   ticketId,
   createdAt,
   movieOnSelectHall,
+  addOns,
 }) => {
   const [clicked, setClicked] = useState(false);
-  let numberOfSeats;
+
   const renderMultipleTickets = () => {
     return selectedSeats.map((ticket, i) => {
-      numberOfSeats = i;
       return (
-        <div
-          className={`OrderListItem ${clicked && 'noHover'}`}
-          key={i}
-          id={`${ticketId}-${i}`}
-        >
-          <div className='OrderListItem__createdAt'>
-            <span>{moment(createdAt).format('MMMM Do YYYY, h:mm:ss a')}</span>
-            <span>{moment(createdAt).startOf().fromNow()}</span>
-          </div>
+        <div className={`OrderListItem ${clicked ? 'noHover' : ''}`} key={i}>
           <div className='OrderListItem__leftSide'>
             <div className='OrderListItem__leftSide-title'>
               {fetchedMovies[selectedMovie].title}
@@ -94,6 +90,39 @@ const OrderListItem = ({
     });
   };
 
+  const renderAddOns = () => {
+    return (
+      <div className='OrderListItem__wrapper-addons'>
+        {!isAddOnsEmpty(addOns) ? (
+          <>
+            <h3>Your AddOns</h3>
+            <div className='OrderListItem__wrapper-addons-items'>
+              {isSelected('coffee', addOns) && (
+                <div className='OrderListItem__wrapper-addons-items--item'>
+                  <h4>Coffee</h4>
+                  {renderAddOnType('coffee', addOns)}
+                </div>
+              )}
+
+              {isSelected('coke', addOns) && (
+                <div className='OrderListItem__wrapper-addons-items--item'>
+                  <h4>Coke</h4>
+                  {renderAddOnType('coke', addOns)}
+                </div>
+              )}
+              {isSelected('popcorn', addOns) && (
+                <div className='OrderListItem__wrapper-addons-items--item'>
+                  <h4>Popcorn</h4>
+                  {renderAddOnType('popcorn', addOns)}
+                </div>
+              )}
+            </div>
+          </>
+        ) : null}
+      </div>
+    );
+  };
+
   //prints the ticket
   const printListItem = (itemToPrintId) => {
     let printElement = document.getElementById(itemToPrintId);
@@ -115,14 +144,23 @@ const OrderListItem = ({
   //hides via class noHover on main div the print icon when clicking on print icon (doesn't appear on print)
   const clickOnPrint = () => {
     setClicked(true);
-    printListItem(`${ticketId}-${numberOfSeats}`);
+    printListItem(`${ticketId}`);
   };
 
   const renderListItem = () => {
     if (_.isEmpty(fetchedMovies)) {
       return <div>Loading</div>;
     } else {
-      return renderMultipleTickets();
+      return (
+        <div className='OrderListItem__wrapper' id={`${ticketId}`}>
+          <div className='OrderListItem__createdAt'>
+            <span>{moment(createdAt).format('MMMM Do YYYY, h:mm:ss a')}</span>
+            <span>{moment(createdAt).startOf().fromNow()}</span>
+          </div>
+          {renderMultipleTickets()}
+          {renderAddOns()}
+        </div>
+      );
     }
   };
 

@@ -16,7 +16,7 @@ const persistConfig = {
   key: 'root',
   storage,
   //reducers we need to persist
-  // whitelist: ['auth', 'movies', 'seats'],
+  whitelist: ['auth', 'movies', 'seats', 'addOns'],
 };
 
 const rootReducer = combineReducers({
