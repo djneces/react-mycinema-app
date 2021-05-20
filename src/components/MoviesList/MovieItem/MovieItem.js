@@ -17,16 +17,7 @@ const MovieItem = ({
   const [loaded, setLoaded] = useState(false);
 
   if (_.isEmpty(fetchedMovies)) return;
-  const {
-    title,
-    overview,
-    genres,
-    runtime,
-    release_date,
-    original_language,
-    vote_average,
-    posterUrl,
-  } = fetchedMovies[movieId];
+  const { title, posterUrl } = fetchedMovies[movieId];
 
   const onSelectMovie = () => {
     //if select clicked 2x for the same movie => deselects

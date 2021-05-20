@@ -22,7 +22,7 @@ const LandingPage = () => {
         </div>
         <div className='LandingPage__footer'>
           <small>
-            "Try to sit back and immerse yourself in this spectacular world"
+            "Sit back and immerse yourself in this spectacular world"
           </small>
           <div className='LandingPage__footer-socialMedia'>
             <span>

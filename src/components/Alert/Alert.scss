@@ -30,13 +30,13 @@
         color: #fff;
     }
 
-    &.purchased {
+    &.booked {
 
         background-color: darken($color-primary, 30);
         width: 37vw;
-        height: 11vh;
+        height: 13vh;
         text-transform: uppercase;
-        font-size: 1.5rem;
+        font-size: 1.2rem;
         display: flex;
         flex-direction: column;
         justify-content: space-around;

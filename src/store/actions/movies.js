@@ -108,7 +108,7 @@ export const deselectMovieTime = () => ({
   type: DESELECT_MOVIE_TIME,
 });
 
-//clear movie selections
-export const clearMovie = () => ({
+//clear all fetched movies and selected movie
+export const clearMovies = () => ({
   type: CLEAR_MOVIES,
 });

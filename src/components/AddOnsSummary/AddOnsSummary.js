@@ -1,21 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { TICKET_PRICE } from '../../assets/moviesSeed';
-import { renderAddOnType, isSelected, isAddOnsEmpty } from './AddOnsUtil';
+import {
+  renderAddOnType,
+  isSelected,
+  isAddOnsEmpty,
+  calculateTotal,
+} from './AddOnsUtil';
 import './AddOnsSummary.scss';
 
 const AddOnsSummary = ({ addOns, selectedSeats }) => {
   const seatNumbers = selectedSeats
     .map((seat) => `seat ${seat.seat}/ row ${seat.row}`)
     .join(', ');
-
-  const calculateTotal = () => {
-    const addOnsTotal = Object.values(addOns)
-      .map((item) => item.price * item.quantity)
-      .reduce((acc, item) => acc + item, 0);
-    const ticketsTotal = selectedSeats.length * TICKET_PRICE;
-    return addOnsTotal + ticketsTotal;
-  };
 
   return (
     <div className='AddOnsSummary'>
@@ -54,7 +51,8 @@ const AddOnsSummary = ({ addOns, selectedSeats }) => {
         </span>
       </div>
       <div className='AddOnsSummary__total'>
-        <h3>Total</h3>$ {selectedSeats && calculateTotal()}
+        <h3>Total</h3>${' '}
+        {selectedSeats && calculateTotal(addOns, selectedSeats, TICKET_PRICE)}
       </div>
     </div>
   );

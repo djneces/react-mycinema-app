@@ -32,7 +32,8 @@ export const clearOrderHistory = () => {
 export const fetchOrderHistory = (userId) => async (dispatch) => {
   if (!userId) return;
   dispatch(fetchOrdersStart());
-  await axios
+  //returns array of orderHistory needed in actions/payment - updatePaymentStatus
+  return await axios
     .get(`/users/${userId}/orders/.json`)
     .then((response) => {
       if (response.data) {
@@ -40,6 +41,7 @@ export const fetchOrderHistory = (userId) => async (dispatch) => {
           type: FETCH_ORDERS_SUCCESS,
           payload: Object.values(response.data),
         });
+        return Object.values(response.data);
       } else {
         dispatch(setAlert('No records found', 'danger'));
         dispatch(fetchOrdersFail('No records found'));

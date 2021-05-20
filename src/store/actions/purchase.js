@@ -1,7 +1,7 @@
 import axios from '../../axios-orders';
 
 import { setAlert } from './alert';
-import { clearMovie } from './movies';
+import { clearMovies } from './movies';
 import { clearSeats } from './seats';
 import { clearAllAddOns } from './addons';
 import { fetchOrderHistory } from './orderHistory';
@@ -50,30 +50,42 @@ export const createOrder = (orderDetails, userId, history) => (dispatch) => {
     .post(`/users/${userId}/orders/.json`, orderDetails)
     .then((response) => {
       if (response.status === 200) {
-        //time needed for spinner animation to play
-        setTimeout(() => {
-          dispatch(purchaseSuccess(response.data.name, orderDetails));
-          history.push('/');
-          dispatch(clearMovie());
-          dispatch(clearSeats());
-          dispatch(clearAllAddOns());
-        }, 2000);
-        //delayed notification after successful purchase
-        setTimeout(() => {
-          dispatch(
-            setAlert(
-              `Ticket${
-                orderDetails.selectedSeats.length > 1 ? 's' : ''
-              } has been booked, enjoy!`,
-              'purchased',
-              5000
-            )
-          );
-        }, 3000);
-        dispatch(fetchOrderHistory(userId));
+        //update the DB with the DB order Id
+        const orderDbId = { orderId: response.data.name };
+        axios
+          .patch(
+            `/users/${userId}/orders/${response.data.name}.json`,
+            orderDbId
+          )
+          .then(() => {
+            dispatch(fetchOrderHistory(userId));
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+
+        dispatch(purchaseSuccess(response.data.name, orderDetails));
       } else {
         dispatch(purchaseFail(response.statusText));
       }
+    })
+    .then(() => {
+      dispatch(
+        setAlert(
+          `Ticket${
+            orderDetails.selectedSeats.length > 1 ? 's' : ''
+          } has been booked, please proceed to payment.`,
+          'booked',
+          5000
+        )
+      );
+    })
+    .then(() => {
+      //get the updated orders
+      history.push('/payment');
+      dispatch(clearMovies());
+      dispatch(clearSeats());
+      dispatch(clearAllAddOns());
     })
     .catch((err) => {
       console.error(err);

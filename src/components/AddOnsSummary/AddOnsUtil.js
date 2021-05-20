@@ -27,3 +27,11 @@ export const isAddOnsEmpty = (addOns) => {
     Object.values(addOns).every((item) => item.quantity === 0)
   );
 };
+
+export const calculateTotal = (addOns, selectedSeats, TICKET_PRICE) => {
+  const addOnsTotal = Object.values(addOns)
+    .map((item) => item.price * item.quantity)
+    .reduce((acc, item) => acc + item, 0);
+  const ticketsTotal = selectedSeats.length * TICKET_PRICE;
+  return addOnsTotal + ticketsTotal;
+};

@@ -11,23 +11,25 @@ import alertReducer from './alert';
 import toggleMenuReducer from './accountDetailsMenu';
 import orderHistoryReducer from './orderHistory';
 import addonsReducer from './addons';
+import paymentReducer from './payment';
 
 const persistConfig = {
   key: 'root',
   storage,
   //reducers we need to persist
-  whitelist: ['auth', 'movies', 'seats', 'addOns'],
+  whitelist: ['auth', 'seats', 'addOns'],
 };
 
 const rootReducer = combineReducers({
   auth: authReducer,
   movies: moviesReducer,
   seats: seatsReducer,
+  addOns: addonsReducer,
+  orderHistory: orderHistoryReducer,
   orders: purchaseReducer,
+  payment: paymentReducer,
   alerts: alertReducer,
   toggleMenu: toggleMenuReducer,
-  orderHistory: orderHistoryReducer,
-  addOns: addonsReducer,
 });
 
 export default persistReducer(persistConfig, rootReducer);

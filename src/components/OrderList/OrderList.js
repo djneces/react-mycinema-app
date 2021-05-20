@@ -14,6 +14,7 @@ const OrderList = ({ orderHistory }) => {
       createdAt,
       movieOnSelectHall,
       addOns,
+      orderTotal: { paid },
     } = item;
 
     return (
@@ -26,6 +27,7 @@ const OrderList = ({ orderHistory }) => {
         createdAt={createdAt}
         movieOnSelectHall={movieOnSelectHall}
         addOns={addOns}
+        paid={paid}
       />
     );
   });

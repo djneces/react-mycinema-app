@@ -8,10 +8,16 @@ import ShowMovieDetailsPage from './containers/ShowMovieDetailsPage/ShowMovieDet
 import SelectSeatPage from './containers/SelectSeatPage/SelectSeatPage';
 import OrderHistoryPage from './containers/OrderHistoryPage/OrderHistoryPage';
 import AddOnsPage from './containers/AddOnsPage/AddOnsPage';
+import PaymentPage from './containers/PaymentPage/PaymentPage';
 import Alert from './components/Alert/Alert';
 import './App.scss';
 
-const App = ({ selectedMovie, selectedMovieTime, selectedSeats }) => {
+const App = ({
+  selectedMovie,
+  selectedMovieTime,
+  selectedSeats,
+  isAuthenticated,
+}) => {
   return (
     <BrowserRouter>
       <div className='App'>
@@ -53,17 +59,33 @@ const App = ({ selectedMovie, selectedMovieTime, selectedSeats }) => {
               )
             }
           />
-          <Route exact path='/tickets' component={OrderHistoryPage} />
+          {/* render /tickets only when authenticated */}
+          <Route
+            exact
+            path='/tickets'
+            render={() =>
+              isAuthenticated ? <OrderHistoryPage /> : <Redirect to='/' />
+            }
+          />
+          {/* render /payment only when authenticated */}
+          <Route
+            exact
+            path='/payment'
+            render={() =>
+              isAuthenticated ? <PaymentPage /> : <Redirect to='/' />
+            }
+          />
         </Switch>
       </div>
     </BrowserRouter>
   );
 };
 
-const mapStateToProps = ({ movies, seats }) => ({
+const mapStateToProps = ({ movies, seats, auth }) => ({
   selectedMovie: movies.selectedMovie,
   selectedMovieTime: movies.selectedMovieTime,
   selectedSeats: seats.selectedSeats,
+  isAuthenticated: auth.isAuthenticated,
 });
 
 export default connect(mapStateToProps)(App);

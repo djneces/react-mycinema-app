@@ -7,9 +7,12 @@ import {
 } from '../../store/actions/auth';
 import { connect } from 'react-redux';
 import { toggleAccountDetails } from '../../store/actions/accountDetailsMenu';
-import { clearMovie } from '../../store/actions/movies';
+import { clearMovies } from '../../store/actions/movies';
 import { clearSeats } from '../../store/actions/seats';
 import { clearAllAddOns } from '../../store/actions/addons';
+import { clearPaymentStatus } from '../../store/actions/payment';
+import { clearOrderHistory } from '../../store/actions/orderHistory';
+import { clearAllPurchases } from '../../store/actions/purchase';
 import CustomBtnOutline from '../CustomBtnOutline/CustomBtnOutline';
 
 import './GoogleAuth.scss';
@@ -36,9 +39,12 @@ class GoogleAuth extends Component {
   onSignOutClick = () => {
     this.props.googleSignOut(this.googleAuth);
     this.props.toggleAccountDetails();
-    this.props.clearMovie();
+    this.props.clearMovies();
     this.props.clearSeats();
     this.props.clearAllAddOns();
+    this.props.clearPaymentStatus();
+    this.props.clearOrderHistory();
+    this.props.clearAllPurchases();
   };
 
   toggleMenu = () => {
@@ -96,7 +102,10 @@ export default connect(mapStateToProps, {
   googleSignOut,
   onAuthChange,
   toggleAccountDetails,
-  clearMovie,
+  clearMovies,
   clearSeats,
   clearAllAddOns,
+  clearPaymentStatus,
+  clearOrderHistory,
+  clearAllPurchases,
 })(GoogleAuth);

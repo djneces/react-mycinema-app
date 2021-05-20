@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import {
@@ -19,10 +20,18 @@ const OrderListItem = ({
   createdAt,
   movieOnSelectHall,
   addOns,
+  paid,
 }) => {
   const [clicked, setClicked] = useState(false);
 
   const renderMultipleTickets = () => {
+    //if selected seats undefined
+    if (!selectedSeats || !selectedMovie || !selectedMovieTime)
+      return (
+        <div className='OrderListItem' style={{ color: 'red' }}>
+          Data missing
+        </div>
+      );
     return selectedSeats.map((ticket, i) => {
       return (
         <div className={`OrderListItem ${clicked ? 'noHover' : ''}`} key={i}>
@@ -130,7 +139,8 @@ const OrderListItem = ({
     printWindow.document.write(document.documentElement.innerHTML);
     setTimeout(() => {
       // Needed for large documents
-      printWindow.document.body.style.margin = '0 0';
+      printWindow.document.body.style.margin = '0 0 auto 0';
+      printWindow.document.body.style.justifyContent = 'flex-start';
       printWindow.document.body.innerHTML = printElement.outerHTML;
       printWindow.document.close(); // necessary for IE >= 10
       printWindow.focus(); // necessary for IE >= 10*/
@@ -156,6 +166,23 @@ const OrderListItem = ({
           <div className='OrderListItem__createdAt'>
             <span>{moment(createdAt).format('MMMM Do YYYY, h:mm:ss a')}</span>
             <span>{moment(createdAt).startOf().fromNow()}</span>
+          </div>
+          <div
+            className={`OrderListItem__wrapper-paymentStatus ${
+              !paid ? 'notPaid' : ''
+            } ${clicked ? 'invisible' : ''}`}
+          >
+            {paid ? (
+              'paid'
+            ) : (
+              <>
+                <span>not paid</span>
+                <Link to='/payment'>
+                  {' '}
+                  <i className='fas fa-credit-card'></i>
+                </Link>
+              </>
+            )}
           </div>
           {renderMultipleTickets()}
           {renderAddOns()}

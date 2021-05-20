@@ -5,8 +5,9 @@ import { withRouter } from 'react-router-dom';
 import CustomBtnFull from '../CustomBtnFull/CustomBtnFull';
 import SpinnerDots from '../SpinnerDots/SpinnerDots';
 import { v4 as uuidv4 } from 'uuid';
-import { DB } from '../../assets/moviesSeed';
+import { DB, TICKET_PRICE } from '../../assets/moviesSeed';
 import { createOrder } from '../../store/actions/purchase';
+import { calculateTotal } from '../AddOnsSummary/AddOnsUtil';
 import './OrderSummary.scss';
 
 const OrderSummary = ({
@@ -50,6 +51,10 @@ const OrderSummary = ({
         createdAt,
         movieOnSelectHall,
         addOns,
+        orderTotal: {
+          paid: false,
+          total: calculateTotal(addOns, selectedSeats, TICKET_PRICE),
+        },
       };
       createOrder(ticketOrder, userId, history);
     }

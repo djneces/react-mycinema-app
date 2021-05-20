@@ -51,6 +51,7 @@ const moviesReducer = (state = INITIAL_STATE, action) => {
     case CLEAR_MOVIES:
       return {
         ...state,
+        fetchedMovies: {},
         selectedMovie: null,
         selectedMovieTime: null,
         youtubeId: null,

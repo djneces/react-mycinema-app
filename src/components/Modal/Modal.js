@@ -29,11 +29,9 @@ const Modal = ({
 
   let title,
     overview,
-    genres,
     runtime,
     release_date,
     original_language,
-    vote_average,
     posterUrl,
     backdropUrl;
 
@@ -48,11 +46,9 @@ const Modal = ({
   if (!_.isEmpty(fetchedMovies)) {
     title = fetchedMovies[movieId].title;
     overview = fetchedMovies[movieId].overview;
-    genres = fetchedMovies[movieId].genres;
     runtime = fetchedMovies[movieId].runtime;
     release_date = fetchedMovies[movieId].release_date;
     original_language = fetchedMovies[movieId].original_language;
-    vote_average = fetchedMovies[movieId].vote_average;
     posterUrl = fetchedMovies[movieId].posterUrl;
     backdropUrl = fetchedMovies[movieId].backdropUrl;
   }

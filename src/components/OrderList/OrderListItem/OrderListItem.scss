@@ -28,6 +28,54 @@
         background-color: rgba(255, 255, 255, 0.1);
         position: relative;
 
+        &-paymentStatus {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            padding: 0.5rem 0.8rem;
+            border-radius: $border-radius-medium;
+            background-color: $color-primary;
+
+            &.notPaid {
+                background-color: $color-red;
+
+                @keyframes scaling {
+                    0% {
+                        transform: scale(1);
+                    }
+
+                    100% {
+                        transform: scale(1.2);
+                    }
+                }
+
+                a {
+                    i {
+                        color: #fff;
+                        animation: scaling 1.5s alternate infinite ease-in;
+                    }
+
+                    &:hover {
+                        i {
+                            color: $color-black;
+                            cursor: pointer;
+                        }
+                    }
+
+
+                }
+
+                span {
+                    margin-right: 0.5rem;
+                }
+
+            }
+
+            &.invisible {
+                display: none;
+            }
+        }
+
         &-addons {
             width: 90%;
             margin-bottom: 2rem;
@@ -84,15 +132,15 @@
 
     &__print {
         position: absolute;
-        bottom: 0;
-        right: 0;
+        bottom: 0.5rem;
+        right: 0.5rem;
+        width: 3.5rem;
         display: flex;
-        flex-direction: column;
-        justify-content: center;
+        justify-content: space-between;
         align-items: center;
         color: #fff;
         padding: 0.8rem;
-        border-radius: 50% 0 0 0;
+        border-radius: $border-radius-medium;
         background-color: $color-primary;
         opacity: 0;
         pointer-events: none;
@@ -192,7 +240,7 @@
             }
 
             &-id {
-                // padding: .5rem .5rem .5rem 0;
+                padding-bottom: 0.5rem;
                 font-size: 1.8rem;
                 color: $color-red;
                 font-family: 'Special Elite';
