@@ -10,7 +10,7 @@ const initialState = {
   loading: false,
 };
 
-const Purchase = (state = initialState, action) => {
+const purchase = (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
     case PURCHASE_START:
@@ -30,4 +30,4 @@ const Purchase = (state = initialState, action) => {
   }
 };
 
-export default Purchase;
+export default purchase;

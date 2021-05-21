@@ -12,6 +12,7 @@ import {
   PURCHASE_FAIL,
   CLEAR_ALL_PURCHASES,
 } from './actionTypes';
+import { saveOccupancy } from './occupancy';
 
 //purchase start
 export const purchaseStart = () => {
@@ -70,6 +71,20 @@ export const createOrder = (orderDetails, userId, history) => (dispatch) => {
       }
     })
     .then(() => {
+      const { selectedMovie, selectedMovieTimeDb, selectedSeats } =
+        orderDetails;
+      selectedSeats.forEach((seat) =>
+        dispatch(
+          saveOccupancy(
+            selectedMovie,
+            selectedMovieTimeDb.day,
+            selectedMovieTimeDb.block,
+            seat.row,
+            seat.seat
+          )
+        )
+      );
+
       dispatch(
         setAlert(
           `Ticket${

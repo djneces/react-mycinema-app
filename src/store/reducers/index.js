@@ -12,18 +12,21 @@ import toggleMenuReducer from './accountDetailsMenu';
 import orderHistoryReducer from './orderHistory';
 import addonsReducer from './addons';
 import paymentReducer from './payment';
+import occupancyReducer from './occupancy';
 
 const persistConfig = {
   key: 'root',
   storage,
   //reducers we need to persist
-  whitelist: ['auth', 'seats', 'addOns'],
+  whitelist: ['auth', 'movies'],
+  // whitelist: ['auth', 'seats', 'addOns'],
 };
 
 const rootReducer = combineReducers({
   auth: authReducer,
   movies: moviesReducer,
   seats: seatsReducer,
+  occupancy: occupancyReducer,
   addOns: addonsReducer,
   orderHistory: orderHistoryReducer,
   orders: purchaseReducer,

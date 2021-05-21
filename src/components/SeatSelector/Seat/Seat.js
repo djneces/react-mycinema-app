@@ -2,28 +2,45 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { selectSeat, deselectSeat } from '../../../store/actions/seats';
-import { occupiedSeats } from '../../../assets/moviesSeed';
 import './Seat.scss';
 
 const Seat = ({
-  seatNumber,
   rowNumber,
+  seatNumber,
   selectSeat,
   deselectSeat,
   selectedSeats,
+  occupancy,
 }) => {
   const onClickSeat = { seat: seatNumber, row: rowNumber };
 
   //check if the seat was already booked before
-  const bookedSeats = occupiedSeats[rowNumber].some(
-    (seat) => seat === seatNumber
-  );
+  const isSeatBooked = () => {
+    //if 0 seats are booked
+    if (occupancy === 0) return false;
+
+    //if seats (at all) are booked in this specific row
+    if (occupancy && rowNumber in occupancy.row) {
+      //if specific seat is booked in this specific row
+      if (
+        occupancy &&
+        seatNumber in occupancy.row[rowNumber].seat &&
+        occupancy.row[rowNumber].seat[seatNumber].booked === true
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  };
 
   const renderSeat = () => {
     return (
       //renders styles for taken seats(booked) and selected seats
       <div
-        className={`Seat ${bookedSeats && 'booked'} ${
+        className={`Seat ${isSeatBooked() && 'booked'} ${
           selectedSeats &&
           selectedSeats.some(
             (savedSeat) =>
@@ -58,8 +75,12 @@ const Seat = ({
   return renderSeat();
 };
 
-const mapStateToProps = ({ seats }) => ({
+const mapStateToProps = ({ seats, movies, occupancy }) => ({
   selectedSeats: seats.selectedSeats,
+  selectedMovie: movies.selectedMovie,
+  selectedMovieDay: movies.selectedMovieTime.dbTime.day,
+  selectedMovieBlock: movies.selectedMovieTime.dbTime.block,
+  occupancy: occupancy.fetchedOccupancy,
 });
 
 export default connect(mapStateToProps, { selectSeat, deselectSeat })(Seat);

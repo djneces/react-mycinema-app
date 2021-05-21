@@ -15,6 +15,7 @@ const OrderSummary = ({
   selectedSeats,
   fetchedMovies,
   selectedMovieTime,
+  selectedMovieTimeDb,
   history,
   location,
   userId,
@@ -46,6 +47,7 @@ const OrderSummary = ({
       const ticketOrder = {
         selectedMovie,
         selectedMovieTime,
+        selectedMovieTimeDb,
         selectedSeats,
         ticketId,
         createdAt,
@@ -143,6 +145,7 @@ const OrderSummary = ({
           <h2>Please, select a movie</h2>
         )}
       </div>
+
       <div className='OrderSummary__btn'>
         <CustomBtnFull
           onclick={onClick}
@@ -167,7 +170,8 @@ const OrderSummary = ({
 const mapStateToProps = ({ movies, seats, auth, orders, addOns }) => ({
   fetchedMovies: movies.fetchedMovies,
   selectedMovie: movies.selectedMovie,
-  selectedMovieTime: movies.selectedMovieTime,
+  selectedMovieTime: movies.selectedMovieTime.time,
+  selectedMovieTimeDb: movies.selectedMovieTime.dbTime,
   selectedSeats: seats.selectedSeats,
   userId: auth.currentUser?.id,
   isAuthenticated: auth.isAuthenticated,

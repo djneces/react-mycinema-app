@@ -48,7 +48,11 @@ const PaymentPage = ({
             {anyOutstandingInvoices() ? (
               outstandingInvoices()
             ) : (
-              <div>All your invoices are paid in full</div>
+              <div>{`${
+                orderHistory.length > 0
+                  ? 'All your invoices are paid in full'
+                  : 'No records found'
+              } `}</div>
             )}
           </div>
         )}

@@ -15,12 +15,15 @@ const TimeBlock = ({
   taken,
   selectedMovieTime,
 }) => {
-  //id created based on selected day and time block
-  const selectedBlock = `${day}: ${showTimeBlocks[block]}`;
+  //based on selected day and time block
+  const selectedBlock = {
+    time: `${day}: ${showTimeBlocks[block]}`,
+    dbTime: { day: day.toLowerCase(), block },
+  };
 
   const renderClick = () => {
     //compare clicked time-block with what is in Redux
-    if (selectedMovieTime === selectedBlock) {
+    if (selectedMovieTime === selectedBlock.time) {
       deselectMovieTime();
       return;
     }
@@ -31,14 +34,14 @@ const TimeBlock = ({
   return (
     <div
       className={`TimeBlock ${taken === 'taken' ? 'taken' : 'notTaken'} ${
-        selectedMovieTime === selectedBlock ? 'selected' : ''
+        selectedMovieTime === selectedBlock.time ? 'selected' : ''
       }`}
       onClick={renderClick}
     >
-      {selectedMovieTime === selectedBlock && taken === 'taken' ? (
+      {selectedMovieTime === selectedBlock.time && taken === 'taken' ? (
         <>
           <i className='fas fa-check'></i>
-          {selectedBlock}
+          {selectedBlock.time}
         </>
       ) : (
         ''
@@ -48,7 +51,7 @@ const TimeBlock = ({
 };
 
 const mapStateToProps = ({ movies }) => ({
-  selectedMovieTime: movies.selectedMovieTime,
+  selectedMovieTime: movies.selectedMovieTime.time,
 });
 
 export default connect(mapStateToProps, { selectMovieTime, deselectMovieTime })(

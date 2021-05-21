@@ -11,7 +11,7 @@ import {
 const INITIAL_STATE = {
   fetchedMovies: {},
   selectedMovie: null,
-  selectedMovieTime: null,
+  selectedMovieTime: {},
   youtubeId: null,
 };
 
@@ -21,7 +21,7 @@ const moviesReducer = (state = INITIAL_STATE, action) => {
     case FETCH_MOVIES:
       return {
         ...state,
-        fetchedMovies: { ...state.movies, ...payload },
+        fetchedMovies: { ...state.fetchedMovies, ...payload },
       };
     case SELECT_MOVIE:
       return {
@@ -36,12 +36,12 @@ const moviesReducer = (state = INITIAL_STATE, action) => {
     case SELECT_MOVIE_TIME:
       return {
         ...state,
-        selectedMovieTime: payload,
+        selectedMovieTime: { ...state.selectedMovieTime, ...payload },
       };
     case DESELECT_MOVIE_TIME:
       return {
         ...state,
-        selectedMovieTime: null,
+        selectedMovieTime: {},
       };
     case YOUTUBE_SEARCH_MOVIE:
       return {
@@ -53,7 +53,7 @@ const moviesReducer = (state = INITIAL_STATE, action) => {
         ...state,
         fetchedMovies: {},
         selectedMovie: null,
-        selectedMovieTime: null,
+        selectedMovieTime: {},
         youtubeId: null,
       };
     default:

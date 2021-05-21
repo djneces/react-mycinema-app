@@ -14,7 +14,7 @@ const initialState = {
   error: null,
 };
 
-const Payment = (state = initialState, action) => {
+const payment = (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
     case PROCESS_PAYMENT_START:
@@ -44,4 +44,4 @@ const Payment = (state = initialState, action) => {
   }
 };
 
-export default Payment;
+export default payment;
