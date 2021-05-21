@@ -159,7 +159,7 @@ const OrderListItem = ({
 
   const renderListItem = () => {
     if (_.isEmpty(fetchedMovies)) {
-      return <div>Loading</div>;
+      return null;
     } else {
       return (
         <div className='OrderListItem__wrapper' id={`${ticketId}`}>

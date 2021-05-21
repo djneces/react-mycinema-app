@@ -13,6 +13,7 @@ import { clearAllAddOns } from '../../store/actions/addons';
 import { clearPaymentStatus } from '../../store/actions/payment';
 import { clearOrderHistory } from '../../store/actions/orderHistory';
 import { clearAllPurchases } from '../../store/actions/purchase';
+import { clearOccupancy } from '../../store/actions/occupancy';
 import CustomBtnOutline from '../CustomBtnOutline/CustomBtnOutline';
 
 import './GoogleAuth.scss';
@@ -45,6 +46,7 @@ class GoogleAuth extends Component {
     this.props.clearPaymentStatus();
     this.props.clearOrderHistory();
     this.props.clearAllPurchases();
+    this.props.clearOccupancy();
   };
 
   toggleMenu = () => {
@@ -108,4 +110,5 @@ export default connect(mapStateToProps, {
   clearPaymentStatus,
   clearOrderHistory,
   clearAllPurchases,
+  clearOccupancy,
 })(GoogleAuth);

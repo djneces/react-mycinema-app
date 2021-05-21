@@ -74,10 +74,14 @@ const OrderSummary = ({
       disabled = selectedSeats && selectedSeats.length === 0;
     }
     if (location.pathname === '/addons') {
+      if (orderIsLoading) {
+        disabled = true;
+      }
       if (isAuthenticated === false) {
         disabled = true;
       }
     }
+
     return disabled;
   };
 

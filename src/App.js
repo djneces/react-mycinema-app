@@ -9,6 +9,7 @@ import SelectSeatPage from './containers/SelectSeatPage/SelectSeatPage';
 import OrderHistoryPage from './containers/OrderHistoryPage/OrderHistoryPage';
 import AddOnsPage from './containers/AddOnsPage/AddOnsPage';
 import PaymentPage from './containers/PaymentPage/PaymentPage';
+import ProfilePage from './containers/ProfilePage/ProfilePage';
 import Alert from './components/Alert/Alert';
 import './App.scss';
 
@@ -73,6 +74,14 @@ const App = ({
             path='/payment'
             render={() =>
               isAuthenticated ? <PaymentPage /> : <Redirect to='/' />
+            }
+          />
+          {/* render /profile only when authenticated */}
+          <Route
+            exact
+            path='/profile'
+            render={() =>
+              isAuthenticated ? <ProfilePage /> : <Redirect to='/' />
             }
           />
         </Switch>

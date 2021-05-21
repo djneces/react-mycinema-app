@@ -1,6 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import logo from '../../assets/images/logo.png';
+import logo from '../../assets/images/logoSM.png';
 import StripeCheckout from 'react-stripe-checkout';
 import { connect } from 'react-redux';
 

@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import OutstandingInvoice from '../../components/OutstandingInvoice/OutstandingInvoice';
 import SpinnerDots from '../../components/SpinnerDots/SpinnerDots';
+import SpinnerLoader from '../../components/SpinnerLoader/SpinnerLoader';
 
 import { fetchOrderHistory } from '../../store/actions/orderHistory';
 import './PaymentPage.scss';
@@ -11,6 +12,7 @@ const PaymentPage = ({
   fetchOrderHistory,
   userId,
   isOrderHistoryLoading,
+  isPaymentLoading,
 }) => {
   useEffect(() => {
     //fetch order history if missing (direct access to /payment)
@@ -39,6 +41,14 @@ const PaymentPage = ({
   };
   return (
     <div className='PaymentPage'>
+      {isPaymentLoading && (
+        <div style={{ marginBottom: '2rem', textAlign: 'center' }}>
+          <SpinnerLoader />
+          Payment is being processed<br></br>
+          <small>Please, do not refresh the page</small>
+        </div>
+      )}
+
       <div className='PaymentPage__summary'>
         <h2>Your outstanding invoices </h2>
         {isOrderHistoryLoading ? (
@@ -61,10 +71,11 @@ const PaymentPage = ({
   );
 };
 
-const mapStateToProps = ({ orderHistory, auth }) => ({
+const mapStateToProps = ({ orderHistory, auth, payment }) => ({
   orderHistory: orderHistory.orderHistory,
   isOrderHistoryLoading: orderHistory.loading,
   userId: auth.currentUser?.id,
+  isPaymentLoading: payment.loading,
 });
 
 export default connect(mapStateToProps, { fetchOrderHistory })(PaymentPage);

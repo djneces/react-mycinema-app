@@ -3,12 +3,15 @@ import {
   FETCH_OCCUPANCY_SUCCESS,
   FETCH_OCCUPANCY_FAIL,
   CLEAR_OCCUPANCY,
+  SAVE_OCCUPANCY_SUCCESS,
+  SAVE_OCCUPANCY_FAIL,
 } from '../actions/actionTypes';
 
 const initialState = {
   fetchedOccupancy: null,
   loading: false,
   error: null,
+  newBookings: [],
 };
 
 const occupancy = (state = initialState, action) => {
@@ -28,8 +31,25 @@ const occupancy = (state = initialState, action) => {
         loading: false,
         error: payload,
       };
+    case SAVE_OCCUPANCY_SUCCESS:
+      return {
+        ...state,
+        newBookings: [...state.newBookings, payload],
+      };
+    case SAVE_OCCUPANCY_FAIL:
+      return {
+        ...state,
+        newBookings: [],
+        error: payload,
+      };
     case CLEAR_OCCUPANCY:
-      return { ...state, fetchedOccupancy: null, loading: false };
+      return {
+        ...state,
+        fetchedOccupancy: null,
+        loading: false,
+        error: null,
+        newBookings: [],
+      };
     default:
       return state;
   }

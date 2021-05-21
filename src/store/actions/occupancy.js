@@ -3,6 +3,8 @@ import {
   FETCH_OCCUPANCY_SUCCESS,
   FETCH_OCCUPANCY_FAIL,
   CLEAR_OCCUPANCY,
+  SAVE_OCCUPANCY_SUCCESS,
+  SAVE_OCCUPANCY_FAIL,
 } from './actionTypes';
 import axios from '../../axios-orders';
 import { setAlert } from './alert';
@@ -29,6 +31,7 @@ export const clearOccupancy = () => {
   };
 };
 
+//FETCH OCCUPANCY
 export const fetchOccupancy =
   (selectedMovieId, selectedDay, selectedTimeBlock) => (dispatch) => {
     if (!selectedMovieId) return;
@@ -55,6 +58,7 @@ export const fetchOccupancy =
           dispatch(setAlert('Network error, data not loaded', 'danger'));
           dispatch(fetchOccupancyFail('Network error, data not loaded'));
           console.error('Network error, data not loaded');
+          throw Error('Network error, data not loaded');
         }
       })
       .catch((err) => {
@@ -78,20 +82,28 @@ export const saveOccupancy =
       )
       .then((response) => {
         if (response.status === 200) {
-          // console.log(response);
-          // dispatch({
-          //   type: FETCH_OCCUPANCY_SUCCESS,
-          //   payload: responseData,
-          // });
+          const savedData = {
+            selectedMovieId,
+            selectedDay,
+            selectedTimeBlock,
+            seats: { row: rowNumber, seat: seatNumber },
+            status: response.data.booked,
+          };
+
+          dispatch({
+            type: SAVE_OCCUPANCY_SUCCESS,
+            payload: savedData,
+          });
         } else {
-          // dispatch(setAlert('Network error, data not loaded', 'danger'));
-          // dispatch(fetchOccupancyFail('Network error, data not loaded'));
-          console.error('Network error, data not loaded');
+          dispatch(setAlert('Network error, data not saved', 'danger'));
+          console.error('Network error, data not saved');
         }
       })
       .catch((err) => {
-        // dispatch(fetchOccupancyFail(err));
-        // dispatch(setAlert('Data could not be loaded', 'danger'));
+        dispatch({
+          type: SAVE_OCCUPANCY_FAIL,
+          payload: err,
+        });
         console.error(err);
       });
   };
